@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Recommendation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        
+
+        /* Container Styling */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Heading Styles */
+        h1 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #495057;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        .form-container {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+        
+        }
+
+        .btn-primary {
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #007bff;
+            border-color: #0056b3;
+        }
+
+
+        /* Recipe Styling */
+        .recipe {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .recipe_body {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Grid Styling */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centers all cards horizontally */
+            gap: 15px; /* Adds spacing between cards */
+        }
+
+        .col-md-4 {
+            max-width: 30%; /* Maximum width of column*/
+        }
+        .recipe-image {
+            border-radius: 10px; /* Optional: rounded corners */
+            margin-top: 15px;
+            margin-bottom: 15px; /* Spacing between the image and text */
+}
+
+
+        /* Responsive Design for all screens */
+        @media (max-width: 800px) {
+            .col-md-4 {
+                flex: 0 0 100%; /* Full width for smaller screens */
+                max-width: 100%;
+            }
+            .recipe {
+                margin: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class=" text-center">Recipe Recommendation System</h1>
+        <div class="form-container">
+            <form method="post" class="mt-4">
+                <div class="form-group">
+                    <label for="ingredients">Enter Ingredients (comma-separated):</label>
+                    <input type="text" class="form-control" id="ingredients" name="ingredients" placeholder="e.g:chicken,milk,tomato" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Get Recipes</button>
+            </form>
+        </div>
+        
+        {% if recommendations %}
+        <div class="mt-4">
+            <h2>Recommended Recipes</h2>
+            <div class="row">
+                {% for recipe in recommendations %}
+                <div class="col-md-4">
+                    <div class="recipe">
+                        <div class="recipe_body">
+                            <h5 class="recipe-title">{{ recipe['Recipe Name'] }}</h5>
+                            <img class="recipe-image" src="{{ recipe['image-url'] }}" alt="{{ recipe['Recipe Name'] }}" />
+                            <p class="recipe-text"><strong>Ingredients:</strong> {{ recipe['Ingredients'] }}</p>
+                            <p class="recipe-text"><strong>Cooking Time:</strong> {{ recipe['Cooking Time (minutes)'] }} minutes</p>
+                            <p class="recipe-text"><strong>Steps:</strong> {{ recipe['Steps'] }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <p class="text-center mt-4">No recommendations available</p>
+        {% endif %}
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
